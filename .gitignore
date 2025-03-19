@@ -1,0 +1,5 @@
+.venv
+.pybuild
+*.egg-info
+debian/.debhelper/
+debian/go-parse-a2l/

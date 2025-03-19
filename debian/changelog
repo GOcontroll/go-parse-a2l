@@ -1,0 +1,5 @@
+go-parse-a2l (1.0.0) bookworm; urgency=medium
+
+  * Initial release.
+
+ -- Maud Spierings <maudspierings@gocontroll.com>  Wed, 19 Mar 2025 12:30:43 +0100
