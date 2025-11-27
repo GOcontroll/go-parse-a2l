@@ -9,7 +9,7 @@ long_description = (root / "README.md").read_text()
 
 setup(
     name = "go-parse-a2l",
-    version = "1.0.0",
+    version = "1.0.1",
     description = "A script to parse an a2l file and turn it into json",
     url="https://github.com/GOcontroll/go-parse-a2l",
     license="MIT",

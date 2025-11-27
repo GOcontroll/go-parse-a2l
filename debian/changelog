@@ -1,3 +1,9 @@
+go-parse-a2l (1.0.1) bookworm; urgency=medium
+
+  * Also copy header.json to /usr/node-red-static/
+
+ -- Maud Spierings <maudspierings@gocontroll.com>  Thu, 27 Nov 2025 14:42:26 +0100
+
 go-parse-a2l (1.0.0) bookworm; urgency=medium
 
   * Initial release.
