@@ -1,5 +1,7 @@
 .venv
 .pybuild
 *.egg-info
-debian/.debhelper/
-debian/go-parse-a2l/
+debian/*.debhelper
+debian/go-parse-a2l*
+debian/files
+debian/debhelper-build-stamp
