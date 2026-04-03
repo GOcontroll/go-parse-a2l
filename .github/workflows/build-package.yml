@@ -1,0 +1,57 @@
+name: Build and publish go-parse-a2l package
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Install build dependencies
+        run: sudo apt-get install -y debhelper dh-python python3-setuptools python3-all dpkg-dev devscripts
+
+      - name: Update changelog version
+        run: |
+          dch --newversion "${{ steps.version.outputs.version }}" \
+              --distribution bookworm \
+              --force-distribution \
+              "Release ${{ steps.version.outputs.version }}"
+
+      - name: Build .deb
+        run: dpkg-buildpackage -us -uc -b
+
+      - name: Collect artifact
+        run: |
+          mkdir -p "${{ runner.temp }}/dist"
+          cp ../go-parse-a2l_${{ steps.version.outputs.version }}_all.deb \
+             "${{ runner.temp }}/dist/"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ runner.temp }}/dist/go-parse-a2l_${{ steps.version.outputs.version }}_all.deb
+          generate_release_notes: true
+
+      - name: Trigger go-apt index rebuild
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.DISPATCH_TOKEN }}
+          repository: GOcontroll/go-apt
+          event-type: rebuild-index
+          client-payload: |
+            {
+              "package": "go-parse-a2l",
+              "version": "${{ steps.version.outputs.version }}",
+              "arch": "all",
+              "deb_url": "https://github.com/GOcontroll/go-parse-a2l/releases/download/${{ github.ref_name }}/go-parse-a2l_${{ steps.version.outputs.version }}_all.deb"
+            }
