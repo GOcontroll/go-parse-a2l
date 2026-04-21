@@ -18,6 +18,5 @@ Architecture: all
 Depends:
  ${python3:Depends},
  ${misc:Depends},
- python3-pyuio,
 Description: A script to parse an a2l file and turn it into json (Python 3)
 

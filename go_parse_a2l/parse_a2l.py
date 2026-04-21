@@ -1,10 +1,25 @@
 #!/usr/bin/env python3
 
-from pyuio import asap_datatypes
 from json import dumps as dump_json
 from subprocess import run
 from glob import glob
 from os import path
+
+
+class asap_datatypes:
+    """ASAP-2 / ASAM-MCD-2 datatype codes. Mirrors pyuio.asap_datatypes
+    to avoid an otherwise unnecessary dependency on the full pyuio package."""
+    uint8 = 0
+    int8 = 1
+    uint16 = 2
+    int16 = 3
+    uint32 = 4
+    int32 = 5
+    uint64 = 6
+    int64 = 7
+    single = 8
+    double = 9
+    boolean = 10
 
 
 def parse_a2l():
